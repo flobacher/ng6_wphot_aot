@@ -1,9 +1,6 @@
 const path = require('path');
 
 module.exports = {
-    entry: {
-        polyfills: './src/client/app/polyfills.ts',
-    },
     resolve: {
         extensions: ['.ts', '.js'],
     },

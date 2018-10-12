@@ -3,10 +3,13 @@ const webpack = require('webpack');
 const webpackDevMiddleware = require('webpack-dev-middleware');
 const webpackHotMiddleware = require('webpack-hot-middleware');
 const compression = require('compression');
+const proxy = require('http-proxy-middleware');
+const fs = require('fs');
 
 const config = require('../webpack.config.dev.js');
 
-const NODE_ENV = process.env.NODE_ENV || 'production';
+const NODE_ENV = process.env.NODE_ENV || 'development';
+const PROXY = process.env.PROXY || null;
 const isDev = NODE_ENV === 'development';
 const app = express();
 
@@ -29,13 +32,23 @@ if (isDev) {
         }),
     );
 } else {
+    let manifest = null;
+    fs.readFile(`${__dirname}/manifest.json`, 'utf8', (err, data) => {
+        if (err) throw err; // we'll not consider error handling for now
+        manifest = JSON.parse(data);
+    });
+
     app.set('view engine', 'ejs');
     app.set('view options', { rmWhitespace: true });
     app.set('views', `public`);
     app.get('/', (req, res) => {
-        res.render('index.ejs', { title: 'Hey' });
+        res.render('index.ejs', { manifest: manifest });
     });
     app.use(compression());
+}
+
+if (PROXY) {
+    app.use('/api', proxy({ target: `${PROXY}`, changeOrigin: true }));
 }
 
 app.use(express.static('public'));

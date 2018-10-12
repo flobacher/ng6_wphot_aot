@@ -28,6 +28,6 @@ import { Component } from '@angular/core';
 export class AppComponent {
     public title: string;
     constructor() {
-        this.title = 'HOIiii';
+        this.title = 'World';
     }
 }

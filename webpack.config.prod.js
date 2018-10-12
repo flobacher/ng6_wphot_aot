@@ -2,6 +2,7 @@ const merge = require('webpack-merge');
 const AngularCompilerPlugin = require('@ngtools/webpack').AngularCompilerPlugin;
 const path = require('path');
 const webpack = require('webpack');
+const ManifestPlugin = require('webpack-manifest-plugin');
 
 const common = require('./webpack.config.common');
 
@@ -12,7 +13,7 @@ module.exports = merge(common, {
         app: './src/client/app/index.ts',
     },
     output: {
-        filename: '[name].js', // .[contenthash]
+        filename: '[name].[contenthash].js',
     },
     module: {
         rules: [
@@ -45,5 +46,7 @@ module.exports = merge(common, {
         }),
 
         new webpack.HashedModuleIdsPlugin(),
+        new webpack.optimize.ModuleConcatenationPlugin(),
+        new ManifestPlugin(),
     ],
 });

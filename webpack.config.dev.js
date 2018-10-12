@@ -43,8 +43,9 @@ module.exports = merge(common, {
     },
     plugins: [
         new HtmlWebpackPlugin({
-            template: 'public/index.ejs',
-            inject: false,
+            template: '!!ejs-loader!public/index.ejs',
+            templateParameters: { manifest: false },
+            inject: true,
         }),
         new webpack.HotModuleReplacementPlugin(),
         // new webpack.NamedModulesPlugin(),
