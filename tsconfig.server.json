@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "es2016",
+    "outDir": "dist",
+    "moduleResolution": "node",
+    "sourceMap": true
+  },
+  "include": ["src/server/**/*.ts"],
+  "exclude": [
+    "node_modules",
+    "build",
+    "coverage",
+    "scripts",
+    "src/setupTests.ts",
+    "**/*.test.ts",
+    "**/*.test.tsx"
+  ]
+}
