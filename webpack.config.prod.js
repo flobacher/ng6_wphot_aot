@@ -6,6 +6,7 @@ const ManifestPlugin = require('webpack-manifest-plugin');
 
 const common = require('./webpack.config.common');
 
+console.log('PROD build');
 module.exports = merge(common, {
     mode: 'production',
     devtool: 'nosources-source-map',

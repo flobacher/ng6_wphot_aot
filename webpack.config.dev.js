@@ -4,11 +4,13 @@ const webpack = require('webpack');
 
 const common = require('./webpack.config.common');
 
+console.log('DEV build');
 module.exports = merge(common, {
     mode: 'development',
     entry: {
         app: [
             'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000',
+            'core-js/es7/reflect', // only add in dev
             './src/client/app/index.ts',
         ],
     },
