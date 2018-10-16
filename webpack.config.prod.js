@@ -3,7 +3,6 @@ const webpack = require('webpack');
 const ManifestPlugin = require('webpack-manifest-plugin');
 const merge = require('webpack-merge');
 const AngularCompilerPlugin = require('@ngtools/webpack').AngularCompilerPlugin;
-const PurifyPlugin = require('@angular-devkit/build-optimizer').PurifyPlugin;
 
 const common = require('./webpack.config.common');
 
@@ -47,6 +46,5 @@ module.exports = merge(common, {
         new webpack.HashedModuleIdsPlugin(),
         new webpack.optimize.ModuleConcatenationPlugin(),
         new ManifestPlugin(),
-        new PurifyPlugin(),
     ],
 });
