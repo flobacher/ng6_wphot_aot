@@ -10,9 +10,6 @@ console.log('PROD build');
 module.exports = merge(common, {
     mode: 'production',
     devtool: 'nosources-source-map',
-    entry: {
-        app: './src/client/app/index.ts',
-    },
     output: {
         filename: '[name].[contenthash].js',
     },
@@ -23,14 +20,6 @@ module.exports = merge(common, {
             {
                 test: /(\.ngfactory\.js|\.ngstyle\.js|\.ts)$/,
                 loader: '@ngtools/webpack',
-            },
-            // When the @ngtools webpack loader runs, it will replace the @Component()
-            // "templateUrl" and "styleUrls" with inline "require()" calls. As such, we
-            // need the raw-loader so that require() will know how to load .htm and .css
-            // files as plain-text.
-            {
-                test: /\.(html|css)$/,
-                loader: 'raw-loader',
             },
         ],
     },
