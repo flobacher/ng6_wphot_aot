@@ -2,7 +2,8 @@ const path = require('path');
 
 module.exports = {
     entry: {
-        app: ['./src/client/app/polyfills.ts', './src/client/app/index.ts'],
+        app: ['./src/client/app/index.ts'],
+        polyfills: './src/client/app/polyfills.ts',
     },
     output: {
         path: path.resolve(__dirname, 'dist'),
@@ -36,9 +37,13 @@ module.exports = {
     },
     optimization: {
         splitChunks: {
-            // Apply optimizations to all chunks, even initial ones (not just the
+            // Apply optimizations to all chunks except polyfills, even initial ones (not just the
             // ones that are lazy-loaded).
-            chunks: 'all',
+            chunks(chunk) {
+                // exclude `my-excluded-chunk`
+                return chunk.name !== 'polyfills';
+            },
+            name: 'vendor',
         },
         // Pull the Webpack runtime out into its own bundle file so that the
         // contentHash of each subsequent bundle will remain the same as long as the

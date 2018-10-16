@@ -14,7 +14,8 @@
     if (manifest) {
     %>
     <script type="text/javascript" src="<%= manifest['runtime.js'] %>"></script>
-    <script type="text/javascript" src="<%= manifest['vendors~app.js'] %>"></script>
+    <script type="text/javascript" src="<%= manifest['polyfills.js'] %>"></script>
+    <script type="text/javascript" src="<%= manifest['vendor.js'] %>"></script>
     <script type="text/javascript" src="<%= manifest['app.js'] %>"></script>
     <%
     }
