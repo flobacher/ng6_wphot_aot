@@ -5,15 +5,12 @@ const webpack = require('webpack');
 const common = require('./webpack.config.common');
 
 console.log('DEV build');
-module.exports = merge.strategy(
-    {
-        'entry.app': 'prepend',
-    },
-    common,
-    {
-        mode: 'development',
-        entry: {
-            app: [
+module.exports = merge.strategy({
+    'entry.app': 'prepend',
+})(common, {
+    mode: 'development',
+    entry: {
+        app: [
                 'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000',
                 'core-js/es7/reflect',
             ],
@@ -51,5 +48,4 @@ module.exports = merge.strategy(
             new webpack.HotModuleReplacementPlugin(),
             // new webpack.NamedModulesPlugin(),
         ],
-    },
-);
+});
