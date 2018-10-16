@@ -19,6 +19,13 @@ module.exports = {
                 loader: 'raw-loader',
                 exclude: /\.async\.(html|css)$/,
             },
+            {
+                // Mark files inside `@angular/core` as using SystemJS style dynamic imports.
+                // Removing this will cause deprecation warnings to appear.
+                // The [\\|\/] piece accounts for path separators in *nix and Windows
+                test: /[\/\\]@angular[\/\\]core[\/\\].+\.js$/,
+                parser: { system: true },
+            },
         ],
     },
     resolve: {
