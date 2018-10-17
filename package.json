@@ -8,6 +8,7 @@
     "format": "prettier --write \"./*.*\" \"./src/**/*.*\"",
     "?clean": "echo Empties the output dir",
     "clean": "rimraf ./dist",
+    "compile:app": "ngc",
     "?build": "echo Builds the package (app and server)",
     "build": "cross-env NODE_ENV=production npm-run-all -p build:*",
     "build:server": "tsc -p tsconfig.server.json",
