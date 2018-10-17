@@ -3,6 +3,7 @@ const webpack = require('webpack');
 const ManifestPlugin = require('webpack-manifest-plugin');
 const merge = require('webpack-merge');
 const AngularCompilerPlugin = require('@ngtools/webpack').AngularCompilerPlugin;
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 const common = require('./webpack.config.common');
 
@@ -29,6 +30,13 @@ module.exports = merge(common, {
                     sourceMap: true,
                 },
             },
+        ],
+    },
+    optimization: {
+        minimizer: [
+            new UglifyJsPlugin({
+                extractComments: 'licenses.txt',
+            }),
         ],
     },
     plugins: [
