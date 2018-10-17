@@ -1,7 +1,7 @@
-import { enableProdMode } from '@angular/core';
-import { ɵrenderComponent, ɵComponentType } from '@angular/core';
+// import { enableProdMode } from '@angular/core';
+// import { ɵrenderComponent, ɵComponentType } from '@angular/core';
 
-import { AppComponent } from './app.component';
+// import { AppComponent } from './app.component';
 
-enableProdMode();
-ɵrenderComponent(AppComponent as ɵComponentType<AppComponent>);
+// enableProdMode();
+// ɵrenderComponent(AppComponent as ɵComponentType<AppComponent>);
