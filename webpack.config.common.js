@@ -21,6 +21,11 @@ module.exports = {
                 exclude: /\.async\.(html|css)$/,
             },
             {
+                test: /\.less$/,
+                use: ['to-string-loader', 'css-loader', 'less-loader'],
+                exclude: /\.async\.(less)$/,
+            },
+            {
                 // Mark files inside `@angular/core` as using SystemJS style dynamic imports.
                 // Removing this will cause deprecation warnings to appear.
                 // The [\\|\/] piece accounts for path separators in *nix and Windows
