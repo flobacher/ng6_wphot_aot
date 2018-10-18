@@ -1,10 +1,10 @@
-import { NgModule } from '@angular/core';
+// import { NgModule } from '@angular/core';
 
-import { AppComponent } from './app.component';
+// import { AppComponent } from './app.component';
 
-@NgModule({
-    declarations: [AppComponent],
-})
-export class AppModule {
-    constructor() {}
-}
+// @NgModule({
+//     declarations: [AppComponent],
+// })
+// export class AppModule {
+//     constructor() {}
+// }
