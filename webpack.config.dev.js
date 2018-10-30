@@ -42,7 +42,7 @@ module.exports = merge.strategy({
     },
     plugins: [
         new HtmlWebpackPlugin({
-            template: '!!ejs-loader!public/index.ejs',
+            template: '!!ejs-loader!views/index.ejs',
             templateParameters: { manifest: false },
             inject: true,
         }),

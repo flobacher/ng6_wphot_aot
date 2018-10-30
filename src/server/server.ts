@@ -6,8 +6,6 @@ const compression = require('compression');
 const proxy = require('http-proxy-middleware');
 const fs = require('fs');
 
-const config = require('../webpack.config.dev.js');
-
 const NODE_ENV = process.env.NODE_ENV || 'development';
 const PROXY = process.env.PROXY || null;
 const isDev = NODE_ENV === 'development';
@@ -16,6 +14,8 @@ const app = express();
 console.log('NODE_ENV', NODE_ENV);
 
 if (isDev) {
+    const config = require('../webpack.config.dev.js');
+    console.log('use hmr');
     // Tell express to use the webpack-dev-middleware and use the webpack.config.js
     // configuration file as a base.
     const compiler = webpack(config);
@@ -32,6 +32,8 @@ if (isDev) {
         }),
     );
 } else {
+    console.log('setup view engine');
+
     let manifest = null;
     fs.readFile(`${__dirname}/manifest.json`, 'utf8', (err, data) => {
         if (err) throw err; // we'll not consider error handling for now
@@ -40,11 +42,12 @@ if (isDev) {
 
     app.set('view engine', 'ejs');
     app.set('view options', { rmWhitespace: true });
-    app.set('views', `public`);
+    app.set('views', 'views');
     app.get('/', (req, res) => {
         res.render('index.ejs', { manifest: manifest });
     });
     app.use(compression());
+    app.use(express.static('dist'));
 }
 
 if (PROXY) {
@@ -52,7 +55,6 @@ if (PROXY) {
 }
 
 app.use(express.static('public'));
-app.use(express.static('dist'));
 
 // Serve the files on port 3000.
 app.listen(3000, function() {
