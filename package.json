@@ -16,7 +16,7 @@
     "?rebuild": "echo Clean and Build",
     "rebuild": "npm-run-all clean build",
     "?serve": "echo serve the development version (app with hmr)",
-    "serve": "cross-env PROXY=http://localhost:3002 nodemon -e js,ejs dist/server.js",
+    "serve": "cross-env PROXY=http://localhost:3002 nodemon dist/server.js",
     "?serve_prod": "echo serve the production version (staticly built app without hmr)",
     "serve_prod": "cross-env NODE_ENV=production npm run serve",
     "start": "npm-run-all -p \"build:server -- --watch\" serve",
@@ -74,5 +74,9 @@
     "webpack-hot-middleware": "^2.24.3",
     "webpack-manifest-plugin": "^2.0.4",
     "webpack-merge": "^4.1.4"
+  },
+  "nodemonConfig": {
+    "ignore": ["dist/static/*"],
+    "ext": "js,ejs"
   }
 }

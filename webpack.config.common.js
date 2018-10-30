@@ -7,7 +7,7 @@ module.exports = (env) => {
             polyfills: './src/client/app/polyfills.ts',
         },
         output: {
-            path: path.resolve(__dirname, 'dist'),
+            path: path.resolve(__dirname, 'dist/static'),
             publicPath: '/',
         },
         module: {
