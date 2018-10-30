@@ -15,6 +15,12 @@ const HMR = !!process.env.HMR || isDev;
 const app = express();
 
 console.log('NODE_ENV', NODE_ENV);
+let manifest = {
+    'runtime.js': '/runtime.js',
+    'app.js': '/app.js',
+    'polyfills.js': '/polyfills.js',
+    'vendor.js': '/vendor.js',
+};
 
 if (isDev) {
     const config = require('../webpack.config.dev.js')({ hmr: HMR });
@@ -25,6 +31,7 @@ if (isDev) {
     app.use(
         webpackDevMiddleware(compiler, {
             publicPath: config.output.publicPath,
+            writeToDisk: true,
         }),
     );
     if (HMR) {
@@ -37,29 +44,26 @@ if (isDev) {
         );
     }
 } else {
-    console.log('setup view engine');
-
-    let manifest = null;
     fs.readFile(`${__dirname}/manifest.json`, 'utf8', (err, data) => {
         if (err) throw err; // we'll not consider error handling for now
         manifest = JSON.parse(data);
     });
-
-    app.set('view engine', 'ejs');
-    app.set('view options', { rmWhitespace: true });
-    app.set('views', 'views');
-    app.get('/', (req, res) => {
-        res.render('index.ejs', { manifest: manifest });
-    });
-    app.use(compression());
-    app.use(express.static('dist'));
 }
+
+app.set('view engine', 'ejs');
+app.set('view options', { rmWhitespace: true });
+app.set('views', 'views');
+app.get('/', (req, res) => {
+    res.render('index.ejs', { manifest: manifest });
+});
+app.use(compression());
+app.use(express.static('dist/static'));
 
 if (PROXY) {
+    console.log('add proxy');
+
     app.use('/api', proxy({ target: `${PROXY}`, changeOrigin: true }));
 }
-
-app.use(express.static('public'));
 
 // Serve the files on port 3000.
 app.listen(3000, function() {

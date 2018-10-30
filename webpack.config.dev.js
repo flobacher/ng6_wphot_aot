@@ -1,6 +1,5 @@
 const path = require('path');
 const merge = require('webpack-merge');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
 
 console.log('DEV build');
@@ -44,11 +43,6 @@ module.exports = (env = {}) => {
             ],
         },
         plugins: [
-            new HtmlWebpackPlugin({
-                template: '!!ejs-loader!views/index.ejs',
-                templateParameters: { manifest: false },
-                inject: true,
-            }),
             new webpack.HotModuleReplacementPlugin(),
             // new webpack.NamedModulesPlugin(),
             new webpack.ContextReplacementPlugin( // remove webpack warnings `Critical dependency: the request of a dependency is an expression`
