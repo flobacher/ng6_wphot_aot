@@ -15,13 +15,7 @@ const HMR = !!process.env.HMR || isDev;
 const app = express();
 
 console.log('NODE_ENV', NODE_ENV);
-let manifest = {
-    'runtime.js': '/runtime.js',
-    'app.js': '/app.js',
-    'polyfills.js': '/polyfills.js',
-    'vendor.js': '/vendor.js',
-};
-
+let manifest = null;
 if (isDev) {
     const config = require('../webpack.config.dev.js')({ hmr: HMR });
     console.log('use webpackDevMiddleware');
@@ -43,6 +37,12 @@ if (isDev) {
             }),
         );
     }
+    manifest = {
+        'runtime.js': '/runtime.js',
+        'app.js': '/app.js',
+        'polyfills.js': '/polyfills.js',
+        'vendor.js': '/vendor.js',
+    };
 } else {
     fs.readFile(`${__dirname}/manifest.json`, 'utf8', (err, data) => {
         if (err) throw err; // we'll not consider error handling for now
