@@ -27,10 +27,6 @@ module.exports = (env = {}) => {
             filename: '[name].js',
         },
         devtool: 'inline-source-map',
-        devServer: {
-            contentBase: './dist',
-            hot: true,
-        },
         module: {
             rules: [
                 {
