@@ -7,15 +7,18 @@ const proxy = require('http-proxy-middleware');
 const fs = require('fs');
 
 const NODE_ENV = process.env.NODE_ENV || 'development';
-const PROXY = process.env.PROXY || null;
 const isDev = NODE_ENV === 'development';
+
+const PROXY = process.env.PROXY || null;
+const HMR = !!process.env.HMR || isDev;
+
 const app = express();
 
 console.log('NODE_ENV', NODE_ENV);
 
 if (isDev) {
-    const config = require('../webpack.config.dev.js');
-    console.log('use hmr');
+    const config = require('../webpack.config.dev.js')({ hmr: HMR });
+    console.log('use webpackDevMiddleware');
     // Tell express to use the webpack-dev-middleware and use the webpack.config.js
     // configuration file as a base.
     const compiler = webpack(config);
@@ -24,13 +27,15 @@ if (isDev) {
             publicPath: config.output.publicPath,
         }),
     );
-
-    app.use(
-        webpackHotMiddleware(compiler, {
-            log: console.log,
-            path: '/__webpack_hmr',
-        }),
-    );
+    if (HMR) {
+        console.log('use HMR');
+        app.use(
+            webpackHotMiddleware(compiler, {
+                log: console.log,
+                path: '/__webpack_hmr',
+            }),
+        );
+    }
 } else {
     console.log('setup view engine');
 
